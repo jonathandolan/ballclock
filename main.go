@@ -6,8 +6,9 @@ import (
 )
 
 func main() {
-	fmt.Println("hello worlds")
+	fmt.Println("Ball clock")
 	c := clock.CreateClock(30)
+//	c.PrintStateAtIteration(325)
 	c.Process()
 //	c.TestQueueRepeated()
 }

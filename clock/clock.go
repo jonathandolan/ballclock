@@ -2,7 +2,7 @@ package clock
 
 import (
 	"fmt"
-//	"os"
+	"os"
 )
 
 type Clock struct {
@@ -31,27 +31,39 @@ func CreateClock(size int) Clock {
 	return c
 }
 
-func (c *Clock) Process() {
-	for i := 0; i < 326; i++{
-		fmt.Println()
-		fmt.Print("iteration: ")
-		fmt.Println(i)
-		fmt.Print("queue: ")
-		fmt.Println(c.queue, i)
-		fmt.Print("minutes contents: ")
-		fmt.Println(c.minutes.contents)
-		fmt.Print("five minutes contents: ")
-		fmt.Println(c.fiveMinutes.contents)
-		fmt.Print("hours contents: ")
-		fmt.Println(c.hours.contents)
-		fmt.Print("size: ")
-		fmt.Println(c.size)
-		fmt.Println()
+func (c *Clock) Process() int {
+	for {
 		c.addOneMinute()
+		if c.isQueueRepeated(){
+			break
+		}
+	}
+	fmt.Print("size: ")
+	fmt.Println(c.size)
+	fmt.Print("minutes: ")
+	fmt.Println(c.minutesElapsed)
 
+	return 7
+}
 
+func (c *Clock) PrintStateAtIteration(iteration int){
+	for i := 0; i < iteration + 1; i++{
+		c.addOneMinute()
 	}
 
+	fmt.Println()
+	fmt.Print("queue: ")
+	fmt.Println(c.queue)
+	fmt.Print("minutes contents: ")
+	fmt.Println(c.minutes.contents)
+	fmt.Print("five minutes contents: ")
+	fmt.Println(c.fiveMinutes.contents)
+	fmt.Print("hours contents: ")
+	fmt.Println(c.hours.contents)
+	fmt.Print("size: ")
+	fmt.Println(c.size)
+	fmt.Print("is queue repeated: ")
+	fmt.Println(c.isQueueRepeated())
 }
 
 func (c *Clock) addOneMinute() {
@@ -104,5 +116,49 @@ func (c *Clock) GetFromQueue() int {
 
 func (c *Clock) updateTimeAddMinute() {
 	c.minutesElapsed++
+}
+
+func (c *Clock) TestQueueRepeated(){
+	for {
+		fmt.Println()
+		fmt.Print("queue: ")
+		fmt.Println(c.queue)
+		fmt.Print("is queue repeated: ")
+		fmt.Println(c.isQueueRepeated())
+		fmt.Print("minutes contents: ")
+		fmt.Println(c.minutes.contents)
+		fmt.Print("five minutes contents: ")
+		fmt.Println(c.fiveMinutes.contents)
+		fmt.Print("hours contents: ")
+		fmt.Println(c.hours.contents)
+		fmt.Print("size: ")
+		fmt.Println(c.size)
+		fmt.Println()
+		c.addOneMinute()
+
+
+		if c.isQueueRepeated(){
+			fmt.Println(c.queue)
+			os.Exit(1)
+		}
+
+	}
+
+}
+
+
+
+func (c *Clock) isQueueRepeated() bool{
+	if len(c.queue) == c.size {
+		for i := 0; i < len(c.queue); i++ {
+			if i + 1 != c.queue[i] {
+				return false
+			}
+		}
+	} else {
+		return false
+	}
+
+	return true
 }
 
