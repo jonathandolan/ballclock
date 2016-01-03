@@ -1,12 +1,20 @@
 package main
 
-import ("fmt"
-		"./clock"
+import (
+	"./clock"
+	"fmt"
 )
 
-func main(){
+func main() {
 	fmt.Println("hello worlds")
-	c := clock.CreateClock(27)
-	c.Process(27)
-//	c.AddToRamp()
+	c := clock.CreateClock(30)
+	c.Process()
+//	c.TestQueueRepeated()
 }
+
+
+
+
+//
+//{"Min":[],"FiveMin":[22,13,25,3,7],"Hour":[6,12,17,4,15],"Main"
+//[11,5,26,18,2,30,19,8,24,10,29,20,16,21,28,1,23,14,27,9]}
